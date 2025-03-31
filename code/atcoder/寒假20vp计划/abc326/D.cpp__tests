@@ -1,0 +1,20 @@
+[
+	{
+		"test": "5\nABCBC\nACAAB\n"
+	},
+	{
+		"test": "3\nAAA\nBBB\n"
+	},
+	{
+		"test": "3\nABC\nABC\n"
+	},
+	{
+		"test": "3\nACB\nABC\n"
+	},
+	{
+		"test": "4\nABCC\nAABC\n"
+	},
+	{
+		"test": "5\nAAAAA\nBBBBB\n"
+	}
+]

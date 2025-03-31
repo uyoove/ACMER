@@ -1,0 +1,11 @@
+[
+	{
+		"test": "3 3 1\nS.G\n.#o\no#.\n"
+	},
+	{
+		"test": "3 3 5\nS.G\no#o\n.#.\n"
+	},
+	{
+		"test": "5 10 2000000\nS.o..ooo..\n..o..o.o..\n..o..ooo..\n..o..o.o..\n..o..ooo.G\n"
+	}
+]

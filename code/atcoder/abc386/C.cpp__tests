@@ -1,0 +1,17 @@
+[
+	{
+		"test": "1\nabc\nac\n"
+	},
+	{
+		"test": "1\nback\nblack\n"
+	},
+	{
+		"test": "1\nabc\nawtf\n"
+	},
+	{
+		"test": "1\nsame\nsame\n"
+	},
+	{
+		"test": "1\nleap\nread\n"
+	}
+]

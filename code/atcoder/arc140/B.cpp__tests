@@ -1,0 +1,14 @@
+[
+	{
+		"test": "6\nAARCCC\n"
+	},
+	{
+		"test": "5\nAAAAA\n"
+	},
+	{
+		"test": "9\nARCARCARC\n"
+	},
+	{
+		"test": "7\nAARCCRA\n"
+	}
+]

@@ -1,0 +1,11 @@
+[
+	{
+		"test": "5 5\nDIMAD\nDIMAI\nDIMAM\nDDMAA\nAAMID\n"
+	},
+	{
+		"test": "2 2\nMA\nID\n"
+	},
+	{
+		"test": "1 2\nDI\n"
+	}
+]

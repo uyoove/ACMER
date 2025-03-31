@@ -1,0 +1,14 @@
+[
+	{
+		"test": "4 2\nabac\n1 3 a\n2 2 c\n"
+	},
+	{
+		"test": "3 2\nA0z\n1 3 0\n1 1 z\n"
+	},
+	{
+		"test": "10 4\nagtFrgF4aF\n2 5 g\n4 9 F\n1 5 4\n1 7 a\n"
+	},
+	{
+		"test": "9 5\naAAaBBccD\n1 4 a\n5 6 c\n2 3 B\n4 4 D\n2 3 A\n"
+	}
+]

@@ -1,0 +1,5 @@
+[
+	{
+		"test": "4\n5\n2H 3H 4H 5H 6D\n1 1 1 1 0 0\n5\n2S 3S 4D 5C 6D\n0 0 1 0 1 1\n5\n2S 3S 4D 5C 6D\n0 0 1 0 1 0\n13\nAS 2S 3S 4S 5H 6H 7H 8H 9H TH JH QH KH\n0 0 0 0 0 1\n"
+	}
+]

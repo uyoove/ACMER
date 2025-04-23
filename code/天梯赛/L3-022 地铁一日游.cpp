@@ -52,7 +52,6 @@ void dfs(int u){
 void solve(){
 	cin >> n >> m >> k;
 	memset(dis,0x3f,sizeof dis);
-	cout << dis[0][0] << endl;
 	for(int i = 1;i <= m;i++){
 		int p;
 		vt<int> v;
@@ -84,7 +83,7 @@ void solve(){
 		for(int j = 1;j <= n;j++){
 			if(i==j) continue;
 			if(dis[i][j] >= 4557430888798830399) continue;
-			int t = (dis[i][j] + k - 1)/k;
+			int t = (dis[i][j])/k;
 			sj[i][t].insert({dis[i][j],j});
 		}
 		for(auto &it:sj[i]){

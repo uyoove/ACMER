@@ -1,0 +1,212 @@
+# Codeforces Round 1019 (Div. 2) C,D
+
+**引言:**代码思路清奇,应该不是最优解,但体现了另一种思路,追求一题多解的小伙伴们可以看看,对于追求简洁的小伙伴来说,这篇不是好文章
+
+## C. Median Splits
+
+**题意:我们要找三个连续子段,让其中任意两段的或者任意三段的,段中的中位数小于等于k(比较拗口,结合题意理解一下吧)**
+
+**思路:**
+
+**首先将值转换为0/1表示大于k的数/小于等于k的数**
+
+设pre[n]为转换后数组的前缀和数组
+
+**然后开始推式子:**
+
+**设 l 表示符合条件的第一段的结尾,r表示第二段结尾**
+
+1.当第一段满足中位数小于等于k,那么后面两段只要找一段符合就可以
+
+中间段:
+
+$2*pre[r] - 2*pre[l] >= r-l $
+
+转换一下
+
+$ l - 2*pre[l] >= r - 2*pre[r] $
+
+同理末尾段:
+
+$ n - 2*pre[n] <= r - 2*pre[r] $
+
+所以:
+
+$r - 2*pre[r] <= l - 2*pre[l] 或者 r - 2*pre[r] >= n - 2*pre[n]$
+
+就输出yes;
+
+2.如果第一段不满足中位数小于等于k,那么很简单:
+
+$ n - 2*pre[n] <= r - 2*pre[r] <= l - 2*pre[l] $
+
+这样分类就与区间无关了,后面set,map啥的瞎搞一下就行了
+
+**代码:**
+
+```c++
+const int N = 200005;
+//三段中至少有两段中位数大于等于 k
+int n,k;
+int a[N],pre[N];
+
+void solve(){
+	multiset<int> se;
+	cin >> n >> k;
+	for(int i = 1;i <= n;i++){
+		cin >> a[i];
+		if(a[i] <= k) a[i] = 1;
+		else a[i] = 0;
+		pre[i] = pre[i - 1] + a[i];
+		if(i!=n) se.insert(i - 2*pre[i]);
+	}
+	int nx = n - 2*pre[n];
+	for(int l = 1;l < n - 1;l++){
+		int p = l - 2*pre[l];
+		se.erase(se.find(p));
+		if((l + 1)/2 <= pre[l]){
+			auto it = se.lower_bound(p);
+			if(it!=se.end()){
+				int tb = *it;
+				if(tb==p){
+					cout << "Yes" << endl;
+					return;
+				}
+			}
+			
+			if(it!=se.begin()){
+				it--;
+				cout << "Yes" << endl;
+				return;
+			}
+			it = se.lower_bound(nx);
+			if(it!=se.end()){
+				cout << "Yes" << endl;
+				return;
+			}
+		}else{
+			if(nx > p) continue; 
+			auto it = se.lower_bound(p);
+			if(it!=se.end()){
+				int tb = *it;
+				if(tb==p && tb >= nx){
+					cout << "Yes" << endl;
+					return;
+				}
+			}
+			if(it!=se.begin()){
+				it--;
+				int tb = *it;
+				if(tb >= nx){
+					cout << "Yes" << endl;
+					return;
+				}
+			}
+		}
+	}
+	cout << "No" << endl;
+}
+```
+
+## D. Local Construction
+
+**题意:根据题意构造一个数组(相信大家都看过题了吧,太长了就不说了)**
+
+**思路:按时刻枚举,我们将一些没有站位的点&&当前时刻没有记录的点叫转折点,如果是奇数的操作时刻,我们在转折点左边的点,从大到小放置,转折点右边的点从小到大放置,偶数时刻在转折点的左边的点从小到大,右边的点从大到小,这个思路很妙,证明很简单,因为转折点一定是会让贴着它的数半符合条件,然后顺着条件往外侧走,就可以一直满足条件**
+
+**代码:**
+
+```c++
+//最后一舞
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+#define pb push_back
+#define vt vector
+#define endl "\n"
+const int N = 200005;
+const int inf = 0x3f3f3f3f;
+int ans[N];
+int a[N];
+int n;
+int f;
+void solve(){
+	cin >> n;
+	vt<vt<int>> pos(n + 2,vt<int>());
+	set<int> se; //记录最后剩下的点
+	set<int> wz; //记录任意一个转折点
+	for(int i = 1;i <= n;i++){
+		cin >> a[i];
+		wz.insert(i);
+		if(a[i]!=-1){
+			pos[a[i]].pb(i);
+		}else{
+			f = i;
+		}
+		se.insert(i);
+	}
+	int r = n;
+	int l = 1;
+
+	for(int i = 1;pos[i].size();i++){
+		for(auto p:pos[i]) wz.erase(p);//消除不合法的转折点
+		int zz = *wz.begin();
+		//找位置+模拟
+		if(i%2){
+			int ll = 0,rr = pos[i].size() - 1,ppos = inf;
+			while(ll <= rr){
+				int mid = ll+rr>>1;
+				if(pos[i][mid] > zz){
+					ppos = pos[i][mid];
+					rr = mid - 1;
+				}else{
+					ll = mid + 1;
+				}
+			}
+			int lr = r - pos[i].size();
+			int ll1 = lr + 1;
+			for(int j = 0;j < pos[i].size();j++){
+				if(pos[i][j] >= ppos){
+					ans[pos[i][j]] = ll1++;
+					se.erase(ll1-1);
+				}else{
+					ans[pos[i][j]] = r--;
+					se.erase(r+1);
+				}
+			}
+			r = lr;
+		}else{
+			int ll = 0,rr = pos[i].size() - 1,ppos = 0;
+			while(ll <= rr){
+				int mid = ll+rr>>1;
+				if(pos[i][mid] < zz){
+					ppos = pos[i][mid];
+					ll = mid + 1;
+				}else{
+					rr = mid - 1;
+				}
+			}
+			int lr = l + pos[i].size();
+			int ll1 = lr - 1;
+
+			for(int j = pos[i].size() - 1;j >= 0;j--){
+				if(pos[i][j] > ppos){
+					ans[pos[i][j]] = l++;
+					se.erase(l-1);
+				}else{
+					ans[pos[i][j]] = ll1--;
+					se.erase(ll1+1);
+				}
+			}
+			l = lr;
+		}
+	}
+	int p = *se.begin();
+	ans[f] = p;
+	for(int i = 1;i <= n;i++){
+		cout << ans[i] << " ";
+	}
+	cout << endl;
+}
+```
+
